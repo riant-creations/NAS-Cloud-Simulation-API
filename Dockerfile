@@ -3,6 +3,7 @@ FROM maven:3.9.9-openjdk-17-slim AS build
 
 WORKDIR /app
 COPY pom.xml .
+COPY target/NASCloudSimulation-0.0.1-SNAPSHOT.jar app.jar
 COPY src ./src
 
 RUN mvn clean package -DskipTests
