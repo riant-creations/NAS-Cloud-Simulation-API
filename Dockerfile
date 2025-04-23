@@ -1,4 +1,10 @@
-FROM openjdk:17-jdk-slim
+FROM maven:3.9.9-openjdk-17-slim AS build
+
+COPY . .
+
+RUN mvn clean package -DskipTests
+
+FROM openjdk:17.0.1-jdk-slim
 
 WORKDIR /app
 
