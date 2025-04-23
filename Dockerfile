@@ -1,11 +1,20 @@
-FROM openjdk:17.0.1-jdk-slim
+# Stage 1: Build
+FROM maven:3.9.9-openjdk-17-slim AS build
 
-COPY --from=build /target/NasCloudSimulation-0.0.1-SNAPSHOT.jar NasCloudSimulation-0.0.1-SNAPSHOT.jar
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
 
-RUN mvn clean package
+RUN mvn clean package -DskipTests
+
+# Stage 2: Runtime
+FROM eclipse-temurin:17-jdk-slim
+
+WORKDIR /app
+COPY --from=build /app/target/NasCloudSimulation-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port 8080 for the backend
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "NasCloudSimulation-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]
