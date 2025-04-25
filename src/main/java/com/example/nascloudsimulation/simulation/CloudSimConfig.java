@@ -17,7 +17,7 @@ import java.util.List;
  *  - "NAS_Datacenter"
  *  - "Cloud_Datacenter"
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class CloudSimConfig {
 
     private CloudSim cloudSim;
