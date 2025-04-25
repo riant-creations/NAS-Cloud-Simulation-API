@@ -5,6 +5,7 @@ import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.provisioners.BwProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.PeProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import java.util.List;
  *  - "NAS_Datacenter"
  *  - "Cloud_Datacenter"
  */
+@Configuration
 public class CloudSimConfig {
 
     private CloudSim cloudSim;
