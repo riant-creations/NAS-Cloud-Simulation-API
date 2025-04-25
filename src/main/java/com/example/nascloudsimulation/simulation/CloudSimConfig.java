@@ -5,6 +5,7 @@ import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.provisioners.BwProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.PeProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public class CloudSimConfig {
 
         return datacenter;
     }
-
+@Bean
     public CloudSim getCloudSim() {
         return cloudSim;
     }
