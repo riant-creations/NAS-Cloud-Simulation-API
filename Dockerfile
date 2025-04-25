@@ -9,10 +9,10 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
-FROM eclipse-temurin:17-jdk-slim
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
-COPY --from=build /app/target/NasCloudSimulation-0.0.1-SNAPSHOT.jar app.jar
+COPY target/NasCloudSimulation-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port 8080 for the backend
 EXPOSE 8080
