@@ -12,7 +12,7 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
-COPY target/NasCloudSimulation-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/NasCloudSimulation-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port 8080 for the backend
 EXPOSE 8080
