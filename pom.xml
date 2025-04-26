@@ -45,7 +45,7 @@
     <artifactId>cloudsim</artifactId>
     <version>4.0</version>
     <scope>system</scope>
-    <systemPath>C:/cloudsim-4.0/jars/cloudsim-4.0.jar</systemPath>
+    <systemPath>C:\Users\HP\eclipse-workspace\NasCloudSimulation\src\main\resources\lib\cloudsim-4.0.jar</systemPath>
 </dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -60,13 +60,16 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <includeSystemScope>true</includeSystemScope>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 
 
 </project>
