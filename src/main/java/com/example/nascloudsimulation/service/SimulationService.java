@@ -17,41 +17,49 @@ import java.util.List;
 public class SimulationService {
 
     public List<String> runSimulation() throws Exception {
-        // 1) Initialize CloudSim environment (2 datacenters)
-        CloudSimConfig config = new CloudSimConfig();
-        CloudSim CloudSim = config.getCloudSim();
-
-        // 2) Create a DatacenterBroker to submit VMs and Cloudlets
-        DatacenterBroker broker = createBroker();
-        int brokerId = broker.getId();
-
-        // 3) Create VMs
-        List<Vm> vmList = new ArrayList<>();
-        // Let's create 2 VMs, one for "NAS" DC, one for "Cloud" DC
-        vmList.add(createVm(brokerId, 0, 500));  // VM #0
-        vmList.add(createVm(brokerId, 1, 1000)); // VM #1
-
-        // 4) Create Cloudlets (representing file operations or tasks)
-        List<Cloudlet> cloudletList = new ArrayList<>();
-        // We'll create 2 Cloudlets, each with some arbitrary length
-        cloudletList.add(createCloudlet(brokerId, 0, 2000));
-        cloudletList.add(createCloudlet(brokerId, 1, 4000));
-
-        // 5) Submit VMs and Cloudlets to the broker
-        broker.submitVmList(vmList);
-        broker.submitCloudletList(cloudletList);
-
-        // 6) Start the simulation
-        CloudSim.startSimulation();
-
-        // 7) Retrieve results
-        List<Cloudlet> newList = broker.getCloudletReceivedList();
-        CloudSim.stopSimulation();
-
-        // 8) Build a result summary
         List<String> results = new ArrayList<>();
-        for (Cloudlet cloudlet : newList) {
-            results.add(cloudletInfo(cloudlet));
+        try {
+            // 1) Initialize CloudSim environment (2 datacenters)
+            CloudSimConfig config = new CloudSimConfig();
+            org.cloudbus.cloudsim.core.CloudSim cloudSimInstance = config.getCloudSim();
+
+            // 2) Create a DatacenterBroker to submit VMs and Cloudlets
+            DatacenterBroker broker = createBroker();
+            int brokerId = broker.getId();
+
+            // 3) Create VMs
+            List<Vm> vmList = new ArrayList<>();
+            // Let's create 2 VMs, one for "NAS" DC, one for "Cloud" DC
+            vmList.add(createVm(brokerId, 0, 500));  // VM #0
+            vmList.add(createVm(brokerId, 1, 1000)); // VM #1
+
+            // 4) Create Cloudlets (representing file operations or tasks)
+            List<Cloudlet> cloudletList = new ArrayList<>();
+            // We'll create 2 Cloudlets, each with some arbitrary length
+            cloudletList.add(createCloudlet(brokerId, 0, 2000));
+            cloudletList.add(createCloudlet(brokerId, 1, 4000));
+
+            // 5) Submit VMs and Cloudlets to the broker
+            broker.submitVmList(vmList);
+            broker.submitCloudletList(cloudletList);
+
+            // 6) Start the simulation
+            cloudSimInstance.startSimulation();
+
+            // 7) Retrieve results
+            List<Cloudlet> newList = broker.getCloudletReceivedList();
+            
+            // 8) Build a result summary
+            for (Cloudlet cloudlet : newList) {
+                results.add(cloudletInfo(cloudlet));
+            }
+
+        } catch (Exception e) {
+            results.add("Simulation failed: " + e.getMessage());
+            throw e;
+        } finally {
+            // Ensure simulation is properly stopped
+            CloudSim.stopSimulation();
         }
 
         return results;
@@ -61,7 +69,7 @@ public class SimulationService {
         return new DatacenterBroker("Broker");
     }
 
-      /**
+    /**
      * Create a simple VM.
      * @param userId the broker ID
      * @param vmId the ID for this VM
