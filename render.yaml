@@ -1,8 +1,10 @@
 services:
   - type: web
-    name: nas-cloud-simulation-api
+    name: nas-cloud-simulation
     env: docker
     dockerfilePath: ./Dockerfile
-    plan: free
-    autoDeploy: true
-    instances: 1
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: PORT
+        value: 8080
