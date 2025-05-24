@@ -1,21 +1,30 @@
 # Stage 1: Build
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 
+# Set working directory
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-COPY .mvn .mvn
-COPY mvnw .
-COPY mvnw.cmd .
 
-# Build with Maven
+# Copy the project files
+COPY . .
+
+# Give execution permissions to mvnw
+RUN chmod +x mvnw
+
+# Build the application
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime
 FROM eclipse-temurin:17-jdk-jammy
 
 WORKDIR /app
-COPY --from=build /app/target/NasCloudSimulation-0.0.1-SNAPSHOT.jar app.jar
+
+# Copy the built artifact from build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Install curl for health check
+RUN apt-get update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Add health check
 HEALTHCHECK --interval=30s --timeout=3s \
@@ -28,5 +37,5 @@ ENV PORT=8080
 # Expose port 8080
 EXPOSE 8080
 
-# Run the application
-CMD ["java", "-jar", "app.jar"]
+# Set the startup command
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

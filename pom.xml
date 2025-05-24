@@ -41,11 +41,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.cloudbus</groupId>
+			<groupId>org.cloudbus.cloudsim</groupId>
 			<artifactId>cloudsim</artifactId>
 			<version>4.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/lib/cloudsim-4.0.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -80,5 +78,18 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Maven Central</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>cloudsim</id>
+			<name>CloudSim Repository</name>
+			<url>https://mvnrepository.com/artifact/org.cloudbus.cloudsim/cloudsim</url>
+		</repository>
+	</repositories>
 
 </project>
