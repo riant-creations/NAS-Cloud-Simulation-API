@@ -28,6 +28,9 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<cloudsim.version>4.0</cloudsim.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -41,9 +44,11 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.cloudbus.cloudsim</groupId>
+			<groupId>org.cloudbus</groupId>
 			<artifactId>cloudsim</artifactId>
-			<version>4.0</version>
+			<version>${cloudsim.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/cloudsim-4.0.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -76,20 +81,24 @@
 					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<includeScope>system</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>central</id>
-			<name>Maven Central</name>
-			<url>https://repo.maven.apache.org/maven2</url>
-		</repository>
-		<repository>
-			<id>cloudsim</id>
-			<name>CloudSim Repository</name>
-			<url>https://mvnrepository.com/artifact/org.cloudbus.cloudsim/cloudsim</url>
-		</repository>
-	</repositories>
 
 </project>

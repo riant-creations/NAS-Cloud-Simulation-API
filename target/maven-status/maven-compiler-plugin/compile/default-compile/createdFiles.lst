@@ -1,7 +1,0 @@
-com\example\nascloudsimulation\service\StorageSimulationService.class
-com\example\nascloudsimulation\NasCloudSimulationApplication.class
-com\example\nascloudsimulation\model\FileInfo.class
-com\example\nascloudsimulation\simulation\CloudSimConfig.class
-com\example\nascloudsimulation\controller\FileController.class
-com\example\nascloudsimulation\service\SimulationService.class
-com\example\nascloudsimulation\controller\SimulationController.class
