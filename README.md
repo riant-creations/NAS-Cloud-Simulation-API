@@ -98,7 +98,3 @@ A simulation system demonstrating hybrid storage management between NAS (Network
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
-
-## License
-
-[Add your license here]
